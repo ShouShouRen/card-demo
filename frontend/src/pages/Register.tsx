@@ -21,47 +21,81 @@ export default function Register() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded shadow-md w-80"
-      >
-        <h2 className="text-2xl font-bold mb-6 text-center">註冊</h2>
-        <input
-          className="w-full mb-4 p-2 border rounded"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="帳號"
-          required
+    <div className="relative flex items-center justify-center min-h-screen overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-[#008CCE]/70 to-[#004098]/70 backdrop-blur-2xl z-0" />
+
+      <div className="relative z-10 bg-white p-8 rounded-2xl shadow-xl w-full max-w-xs md:max-w-sm">
+        <img
+          src="../../public/niu-logo.png"
+          className="w-full mb-4 mt-2"
+          alt=""
         />
-        <input
-          className="w-full mb-4 p-2 border rounded"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="密碼"
-          required
-        />
-        <input
-          className="w-full mb-4 p-2 border rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-        >
-          註冊
-        </button>
-        <div className="mt-4 text-center text-sm">
-          已有帳號？
-          <Link to="/login" className="text-blue-500 hover:underline">
-            登入
-          </Link>
-        </div>
-      </form>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label
+              form="username"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              帳號
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
+          <div>
+            <label
+              form="password"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              密碼
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
+          <div>
+            <label
+              form="password"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 cursor-pointer"
+          >
+            註冊
+          </button>
+          <div className="mt-4 text-center text-sm">
+            已有帳號？
+            <Link to="/login" className="text-blue-500 hover:underline">
+              登入
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

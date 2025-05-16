@@ -93,7 +93,7 @@ export default function CardForm({
 
   const handleLineAuth = async () => {
     try {
-      await liff.init({ liffId: "1660784378-ZdMRVqx5" });
+      await liff.init({ liffId: "id" });
       if (!liff.isLoggedIn()) {
         liff.login();
         return;

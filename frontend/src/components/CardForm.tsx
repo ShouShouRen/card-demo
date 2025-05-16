@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { makeRequest } from "../api";
-import liff from "@line/liff";
 
 interface Card {
   id: number;
@@ -91,22 +90,6 @@ export default function CardForm({
     }
   };
 
-  const handleLineAuth = async () => {
-    try {
-      await liff.init({ liffId: "id" });
-      if (!liff.isLoggedIn()) {
-        liff.login();
-        return;
-      }
-      const profile = await liff.getProfile();
-      setLine_link(`https://line.me/ti/p/~${profile.userId}`);
-      toast.success(`已取得 LINE ID: ${profile.userId}`);
-    } catch (err) {
-      toast.error("LINE 授權失敗，請稍後再試");
-      console.error(err);
-    }
-  };
-
   return (
     <div className="max-w-md mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6 border border-blue-100">
       <h1 className="text-2xl font-bold mb-4 text-blue-700 flex items-center gap-2">
@@ -181,6 +164,12 @@ export default function CardForm({
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
+        <div>
+          <h4 className="text-2xl text-green-500 font-bold mb-2">
+            Line 複製 id 說明
+          </h4>
+          <p>點選右上方設定(齒輪)⚙️ -&gt; 個人檔案 -&gt; 複製ID</p>
+        </div>
         {/* 常用連結 */}
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -192,15 +181,16 @@ export default function CardForm({
               placeholder="輸入 LINE 加好友連結"
               value={line_link}
               onChange={(e) => setLine_link(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-72 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-            <button
-              type="button"
-              onClick={handleLineAuth}
-              className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded transition"
+            <a
+              href="line://"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white bg-green-500 text-sm block rounded p-2"
             >
-              LINE 授權
-            </button>
+              跳轉至line
+            </a>
           </div>
           <label className="block text-sm font-medium text-gray-700 mb-1 mt-2">
             Facebook 好友連結

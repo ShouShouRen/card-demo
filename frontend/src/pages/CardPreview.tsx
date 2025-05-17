@@ -49,22 +49,6 @@ export default function CardPreview() {
   return (
     <div className="bg-gray-100 text-gray-800 p-6 h-screen">
       <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-lg p-6 space-y-6">
-        {/* <div className="bg-white p-8 rounded shadow-md w-96 flex flex-col items-center">
-        {card.avatar && (
-          <img
-            src={`http://localhost:5001${card.avatar}`}
-            alt="avatar"
-            className="w-24 h-24 rounded-full mb-4"
-          />
-        )}
-        <div className="text-2xl font-bold mb-2">{card.name}</div>
-        <div className="mb-1">Email: {card.email}</div>
-        <div className="mb-1">生日: {card.birthday}</div>
-        <div className="mb-1">專業: {card.profession}</div>
-        <div className="text-xs text-gray-400 mt-2">
-          建立：{card.created_at}
-        </div>
-      </div> */}
         <h1 className="text-2xl font-bold">{card.name}</h1>
         <p className="text-lg font-semibold text-red-600">{card.profession}</p>
         {card.avatar && (

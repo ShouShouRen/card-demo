@@ -13,6 +13,7 @@ interface Card {
   updated_at: string;
   line_link: string;
   fb_link: string;
+  vcf_path?: string | null;
 }
 
 export default function CardPreview() {
@@ -59,13 +60,16 @@ export default function CardPreview() {
           />
         )}
         <h2 className="text-xl font-semibold">🔗 連結</h2>
-        <a
-          href="/flask/${data.card_link}"
-          className="block bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold text-xl py-3 px-6 rounded-xl text-center shadow"
-          download
-        >
-          📇 訊息名片
-        </a>
+
+        {card.vcf_path && (
+          <a
+            href={`http://localhost:5001${card.vcf_path}`}
+            className="block bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold text-xl py-3 px-6 rounded-xl text-center shadow"
+            download
+          >
+            📇 訊息名片 (VCF)
+          </a>
+        )}
         <a
           href={card.line_link}
           className="block bg-green-100 hover:bg-green-200 text-green-800 font-bold text-xl py-3 px-6 rounded-xl text-center shadow"

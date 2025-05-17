@@ -33,6 +33,7 @@ export default function CardForm({
   const [birthday, setBirthday] = useState(editCard?.birthday || "");
   const [profession, setProfession] = useState(editCard?.profession || "");
   const [avatar, setAvatar] = useState<File | null>(null);
+  const [vcfFile, setVcfFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [line_link, setLine_link] = useState(editCard?.line_link || "");
   const [fb_link, setFb_link] = useState(editCard?.fb_link || "");
@@ -57,6 +58,17 @@ export default function CardForm({
     }
   };
 
+  // 檢查檔案格式就好
+  const handleFileVcfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && file.type === "text/vcard") {
+      setVcfFile(file);
+    } else {
+      setVcfFile(null);
+      toast.error("❌ 請選擇有效的 vcf 檔案");
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -67,6 +79,9 @@ export default function CardForm({
     formData.append("profession", profession);
     formData.append("line_link", line_link);
     formData.append("fb_link", fb_link);
+    if (vcfFile) {
+      formData.append("cardVcf", vcfFile);
+    }
     if (avatar) {
       formData.append("avatar", avatar);
     }
@@ -96,18 +111,33 @@ export default function CardForm({
         {editCard ? "✏️ 編輯卡片" : "📝 新增卡片"}
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
+        <label className="block text-start text-sm font-medium text-gray-700 mb-1">
+          上傳大頭照
+        </label>
         <div className="flex flex-col items-center mb-2">
           {previewUrl && (
             <img
               src={previewUrl}
               alt="預覽圖片"
-              className="rounded-full w-24 h-24 object-cover border-4 border-blue-100 shadow mb-2"
+              className="my-4 w-full max-w-xs mx-auto rounded-xl shadow-md"
             />
           )}
           <input
             type="file"
             accept="image/png, image/jpeg, image/jpg"
             onChange={handleFileChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            上傳訊息名片請上傳.vcf
+          </label>
+          <input
+            type="file"
+            accept=".vcf"
+            onChange={handleFileVcfChange}
+            name="cardVcf"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>

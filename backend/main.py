@@ -1,7 +1,9 @@
+import pymysql
+pymysql.install_as_MySQLdb()
 import os
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from flask_mysqldb import MySQL
+from flask_pymysql import MySQL
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -9,16 +11,20 @@ from datetime import timedelta
 
 # 設定
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True, allow_headers="*")
-
+CORS(app, resources={r"/api/*": {"origins": "*"}},
+     supports_credentials=True, allow_headers="*")
+pymysql_connect_kwargs = {
+    'user': 'root',
+    'password': '123456789',
+    'host': 'db',
+    'database': 'niu_code',
+}
+app.config['pymysql_kwargs'] = pymysql_connect_kwargs
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=7)
-app.config['MYSQL_HOST'] = '127.0.0.1'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'niu_code'
-app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'static', 'avatars')
+app.config['UPLOAD_FOLDER'] = os.path.join(
+    os.path.dirname(__file__), 'static', 'avatars')
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)

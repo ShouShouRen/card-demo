@@ -6,8 +6,12 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "flask>=3.1.1",
-    "flask-mysqldb",
     "flask-jwt-extended",
     "flask-cors",
-    "werkzeug"
+    "werkzeug",
+    "flask-pymysql",
+    "cryptography>=44.0.3",
 ]
+
+[tool.uv.sources]
+flask-pymysql = { git = "https://github.com/derrick921213/flask-pymysql" }
